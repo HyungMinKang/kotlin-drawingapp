@@ -3,13 +3,13 @@ import model.BackGroundColor
 import model.Rect
 import model.RectView
 
-data class CustomRect(val rectView: RectView , val rect:Rect)
+
 class Plane(private val context: Context) {
-    private val customRectangleList:ArrayList<CustomRect> = arrayListOf()
+    private val customRectangleList:ArrayList<RectView> = arrayListOf()
 
     fun createRectanglePaint(rect: Rect):RectView{
         val rectView= RectView(context,rect)
-        customRectangleList.add(CustomRect(rectView,rect))
+        customRectangleList.add(rectView)
         return rectView
     }
 
@@ -30,7 +30,7 @@ class Plane(private val context: Context) {
         return if(indexOfRectangle==-1){
             null
         } else{
-            customRectangleList[indexOfRectangle].rectView
+            customRectangleList[indexOfRectangle]
         }
     }
 
@@ -52,12 +52,12 @@ class Plane(private val context: Context) {
 
     fun changeColor(rectView:RectView):BackGroundColor{
         val randomColor= BackGroundColor((0..255).random(), (0..255).random(), (0..255).random())
-        customRectangleList.find { it.rectView==rectView }?.rect?.backGroundColor?.value= randomColor
+        customRectangleList.find { it==rectView }?.rect?.backGroundColor?.value= randomColor
         return randomColor
     }
 
     fun changeOpacity(rectView: RectView, opacity:Int){
-        customRectangleList.find { it.rectView==rectView }?.rect?.opacity?.value= opacity
+        customRectangleList.find { it==rectView }?.rect?.opacity?.value= opacity
 
     }
 
