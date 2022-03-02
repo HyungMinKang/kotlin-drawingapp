@@ -1,13 +1,7 @@
 import android.content.Context
-import android.widget.FrameLayout
-import android.widget.ImageView
-import androidx.core.view.ViewCompat
-import com.codesquad.kotlin_drawingapp.R
 import model.BackGroundColor
 import model.Rect
 import model.RectView
-import kotlin.math.roundToInt
-
 
 data class CustomRect(val rectView: RectView , val rect:Rect)
 class Plane(private val context: Context) {
@@ -58,12 +52,12 @@ class Plane(private val context: Context) {
 
     fun changeColor(rectView:RectView):BackGroundColor{
         val randomColor= BackGroundColor((0..255).random(), (0..255).random(), (0..255).random())
-        customRectangleList.find { it.rectView==rectView }?.rect?.backGroundColor=randomColor
+        customRectangleList.find { it.rectView==rectView }?.rect?.backGroundColor?.value= randomColor
         return randomColor
     }
 
     fun changeOpacity(rectView: RectView, opacity:Int){
-        customRectangleList.find { it.rectView==rectView }?.rect?.setOpacity(opacity)
+        customRectangleList.find { it.rectView==rectView }?.rect?.opacity?.value= opacity
 
     }
 

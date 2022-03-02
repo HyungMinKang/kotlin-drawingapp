@@ -4,29 +4,37 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.util.Log
 import android.view.View
+import android.widget.Button
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.codesquad.kotlin_drawingapp.R
 
-class RectView(context: Context, private val rect:Rect) : View(context) {
+class RectView(context: Context,  val rect:Rect) : View(context) {
 
     private val left= rect.point.xPos.toFloat()
     private val right= (rect.point.xPos + rect.size.width).toFloat()
     private val top= rect.point.yPos.toFloat()
     private val bottom = (rect.point.yPos + rect.size.height).toFloat()
-    private var redValue = rect.backGroundColor.redValue
-    private var greenValue =rect.backGroundColor.greenValue
-    private var blueValue = rect.backGroundColor.blueValue
-    private var opacity= (rect.getOpacity()*25.5).toInt()
+    private var redValue = rect.backGroundColor.value?.redValue
+    private var greenValue = rect.backGroundColor.value?.greenValue
+    private var blueValue = rect.backGroundColor.value?.blueValue
+    private var opacity= ((rect.opacity.value?.times(25.5))?.toInt())
     private var selectedBorder = false
+
+
     override fun onDraw(canvas: Canvas){
         super.onDraw(canvas)
         val paint= Paint()
         paint.style = Paint.Style.FILL
-        paint.setARGB(opacity,redValue,greenValue,blueValue)
+        paint.setColor(rect.backGroundColor.value?.getBackGroundColor()!!)
+        paint.setARGB(opacity!!, redValue!!, greenValue!!, blueValue!!)
         canvas.drawRect(left,top,right,bottom, paint)
         if(selectedBorder) {
             paint.style = Paint.Style.STROKE
             paint.color = Color.BLACK
-            paint.strokeWidth= 4.0F
+            paint.strokeWidth= 2.0F
             canvas.drawRect(left, top, right, bottom, paint)
         }
     }
@@ -39,7 +47,6 @@ class RectView(context: Context, private val rect:Rect) : View(context) {
     fun eraseBorder(){
         this.selectedBorder=false
         invalidate()
-
     }
 
     fun colorChange(color:BackGroundColor){

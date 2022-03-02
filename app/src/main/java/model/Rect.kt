@@ -1,21 +1,12 @@
 package model
 
-class Rect(rectId:String, val point: Point, val size: Size, var backGroundColor: BackGroundColor, opacity:Int) {
-    private var rectId=""
-    private var opacity=0
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-    init {
-        this.rectId=rectId
-        this.opacity=opacity
-    }
-
-    fun getOpacity():Int{
-        return this.opacity
-    }
-
-    fun setOpacity(opacity: Int){
-        this.opacity= opacity
-    }
+class Rect(rectId:String, val point: Point, val size: Size, backGroundColor: BackGroundColor, opacity:Int) :ViewModel(){
+    private val rectId=rectId
+    var opacity = MutableLiveData<Int>(opacity)
+    var backGroundColor = MutableLiveData<BackGroundColor>(backGroundColor)
 
     override fun toString(): String {
         return "${this.rectId}, $point $size $backGroundColor Alpha: $opacity"

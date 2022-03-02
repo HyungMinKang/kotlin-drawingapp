@@ -2,7 +2,6 @@ package presenter
 
 import Plane
 import android.content.Context
-import android.widget.TextView
 import model.RectFactory
 import model.RectView
 import view.MainContract
@@ -23,14 +22,12 @@ class MainPresenter(
         }
     }
 
-    override fun changeColor(rectView: RectView, colorValueView: TextView) {
-        val randomColor = plane.changeColor(rectView)
-        view.showColorChange(rectView, randomColor, colorValueView)
+    override fun changeColor(rectView: RectView) {
+        plane.changeColor(rectView)
     }
 
     override fun changeOpacity(rectView: RectView, opacity: Int) {
         plane.changeOpacity(rectView, opacity)
-        view.showOpacityChange(rectView, opacity)
     }
 
     override fun createRectanglePaint() {
