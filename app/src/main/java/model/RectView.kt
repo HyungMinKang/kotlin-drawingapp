@@ -4,12 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.util.Log
 import android.view.View
-import android.widget.Button
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.codesquad.kotlin_drawingapp.R
 
 class RectView(context: Context,  val rect:Rect) : View(context) {
 
