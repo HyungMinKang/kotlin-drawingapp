@@ -13,10 +13,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.view.MotionEvent
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.SeekBar
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -54,6 +51,18 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         val btnMakeRectangle = findViewById<Button>(R.id.btn_addRectangle)
         val opacitySeekBar = findViewById<SeekBar>(R.id.seekbar_opacity)
         val btnMakePhotoView = findViewById<Button>(R.id.btn_addPhoto)
+        val btnWidthUp= findViewById<Button>(R.id.btn_width_up)
+        val btnWidthDown= findViewById<Button>(R.id.btn_width_down)
+        val btnHeightUp= findViewById<Button>(R.id.btn_height_up)
+        val btnHeightDown= findViewById<Button>(R.id.btn_height_down)
+        val btnXposUp= findViewById<Button>(R.id.btn_xPos_up)
+        val btnYposUp= findViewById<Button>(R.id.btn_yPos_down)
+        val btnXposDown= findViewById<Button>(R.id.btn_xPos_down)
+        val btnYposDown= findViewById<Button>(R.id.btn_yPos_down)
+        val editTvWidth= findViewById<EditText>(R.id.editText_width)
+        val editTvHeight= findViewById<EditText>(R.id.editText_height)
+        val editTvXpos= findViewById<EditText>(R.id.editText_xPos)
+        val editTvYpos= findViewById<EditText>(R.id.editText_yPos)
         tvRgbValue = findViewById<TextView>(R.id.tv_rgb_value)
 
         btnMakeRectangle.setOnClickListener {
@@ -107,6 +116,57 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 
         })
+
+        btnHeightDown.setOnClickListener {
+            val strValue = editTvHeight.text.toString().trim()
+            var intValue= strValue.toInt()
+            if(intValue!=1) {
+                editTvHeight.setText("${intValue - 1}")
+            }
+        }
+
+        btnWidthDown.setOnClickListener {
+            val strValue = editTvWidth.text.toString().trim()
+            var intValue= strValue.toInt()
+            if(intValue!=1) {
+                editTvWidth.setText("${intValue - 1}")
+            }
+        }
+
+        btnWidthUp.setOnClickListener {
+            val strValue = editTvWidth.text.toString().trim()
+            var intValue= strValue.toInt()
+            editTvWidth.setText("${intValue+1}")
+        }
+
+        btnHeightUp.setOnClickListener {
+            val strValue = editTvHeight.text.toString().trim()
+            var intValue= strValue.toInt()
+            editTvHeight.setText("${intValue + 1}")
+        }
+
+        btnXposUp.setOnClickListener {
+            val strValue = editTvXpos.text.toString().trim()
+            var intValue= strValue.toInt()
+            editTvXpos.setText("${intValue+1}")
+        }
+        btnXposDown.setOnClickListener {
+            val strValue = editTvXpos.text.toString().trim()
+            var intValue= strValue.toInt()
+            editTvXpos.setText("${intValue-1}")
+        }
+
+        btnYposUp.setOnClickListener {
+            val strValue = editTvYpos.text.toString().trim()
+            var intValue= strValue.toInt()
+            editTvYpos.setText("${intValue+1}")
+        }
+
+        btnYposUp.setOnClickListener {
+            val strValue = editTvYpos.text.toString().trim()
+            var intValue= strValue.toInt()
+            editTvYpos.setText("${intValue-1}")
+        }
 
     }
 
@@ -186,6 +246,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         selectedCustomRectangleView?.drawBorder()
         val rgbValueTextView = findViewById<TextView>(R.id.tv_rgb_value)
         val opacitySeekBar = findViewById<SeekBar>(R.id.seekbar_opacity)
+        val editTvWidth= findViewById<EditText>(R.id.editText_width)
+        val editTvHeight= findViewById<EditText>(R.id.editText_height)
+        val editTvXpos= findViewById<EditText>(R.id.editText_xPos)
+        val editTvYpos= findViewById<EditText>(R.id.editText_yPos)
         if (selectedCustomRectangleView?.photoId == "") {
             rgbValueTextView.text = rect.backGroundColor.value?.getRGBHexValue()
             rect.opacity.value?.let {
@@ -193,6 +257,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             }
             rect.backGroundColor.observe(this, backgroundObserver)
             rect.opacity.observe(this, opacityObserver)
+            editTvHeight.setText("${rect.size.height}")
+            editTvWidth.setText("${rect.size.width}")
+            editTvXpos.setText("${rect.point.xPos}")
+            editTvYpos.setText("${rect.point.yPos}")
         } else {
             rgbValueTextView.text = "No Color"
             rect.opacity.value?.let {
